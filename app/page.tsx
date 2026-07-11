@@ -1,67 +1,50 @@
 const modules = [
-  { number: "01", title: "Diseñar en la era de la IA", state: "En curso", active: true },
-  { number: "02", title: "Contexto y atributos de calidad", state: "Próximamente" },
-  { number: "03", title: "Comparar arquitecturas", state: "Próximamente" },
-  { number: "04", title: "Decidir y documentar con ADR", state: "Próximamente" },
+  ["01", "Diseñar en la era de la IA", "En curso"],
+  ["02", "Contexto, actores y calidad", "Próximamente"],
+  ["03", "Comparar arquitecturas", "Próximamente"],
+  ["04", "Decidir con ADR", "Próximamente"],
 ];
 
-const learningGoals = [
-  "Distinguir una propuesta generada de una decisión de diseño justificada.",
-  "Reconocer atributos de calidad y sus tensiones iniciales.",
-  "Elaborar una carta de diseño para el caso SATE.",
+const tableOfContents = [
+  ["punto-de-partida", "1. Antes de diseñar: una pregunta"],
+  ["ia-y-criterio", "2. IA generativa y criterio profesional"],
+  ["caso-sate", "3. Conocer el caso SATE"],
+  ["calidad", "4. Atributos de calidad"],
+  ["borradores", "5. Leer propuestas críticamente"],
+  ["carta", "6. Carta de diseño inicial"],
+  ["recorrido", "7. Recorrido y entrega"],
 ];
 
-const qualityAttributes = [
-  ["Mantenibilidad", "Cambiar una regla sin romper las demás."],
-  ["Testabilidad", "Comprobar el comportamiento con ejemplos y pruebas."],
-  ["Privacidad", "Mostrar a cada rol sólo la información necesaria."],
-  ["Simplicidad", "Construir una primera versión proporcional al problema."],
+const qualities = [
+  ["Mantenibilidad", "Cuando cambie una regla de asignación, el equipo debe poder modificarla sin reescribir la interfaz ni la persistencia.", "Separar responsabilidades y mantener contratos claros."],
+  ["Testabilidad", "Las reglas de asignación y los cambios de estado deben poder verificarse sin una interfaz ni una base de datos real.", "Conservar la lógica de negocio desacoplada de detalles externos."],
+  ["Privacidad", "Un estudiante sólo accede a sus solicitudes; los indicadores no exponen seguimientos individuales.", "Definir límites de acceso y respuestas con los datos mínimos."],
+  ["Evolutividad", "En el futuro podría agregarse un calendario externo sin alterar las reglas centrales.", "Pensar contratos y adaptadores sin implementar todavía la integración."],
+  ["Simplicidad", "La primera versión debe poder comprenderse y realizarse dentro de la cursada.", "Evitar tecnologías o patrones que no respondan a una necesidad concreta."],
 ];
 
 export default function Home() {
   return (
     <main className="classroom-shell">
       <aside className="course-sidebar" aria-label="Navegación del curso">
-        <div className="brand">
-          <span className="brand-mark">DS</span>
-          <span>DISOPA</span>
-        </div>
-
+        <div className="brand"><span className="brand-mark">DS</span><span>DISOPA</span></div>
         <div className="course-summary">
           <p className="sidebar-label">Tu curso</p>
           <h1>Diseño de Software y Patrones</h1>
-          <div className="progress-track" aria-label="Progreso del curso: 7 por ciento">
-            <span />
-          </div>
+          <div className="progress-track"><span /></div>
           <p className="progress-copy">7% completado · Semana 1 de 15</p>
         </div>
-
         <nav className="module-nav" aria-label="Módulos del curso">
           <p className="sidebar-label">Contenido</p>
-          {modules.map((module) => (
-            <a
-              className={`module-item${module.active ? " active" : ""}`}
-              href={module.active ? "#leccion" : "#proximamente"}
-              key={module.number}
-            >
-              <span className="module-number">{module.number}</span>
-              <span className="module-text">
-                <strong>{module.title}</strong>
-                <small>{module.state}</small>
-              </span>
-              {module.active && <span className="active-dot" aria-label="Módulo actual" />}
+          {modules.map(([number, title, state], index) => (
+            <a className={`module-item${index === 0 ? " active" : ""}`} href={index === 0 ? "#apunte" : "#proximamente"} key={number}>
+              <span className="module-number">{number}</span>
+              <span className="module-text"><strong>{title}</strong><small>{state}</small></span>
+              {index === 0 && <span className="active-dot" aria-label="Módulo actual" />}
             </a>
           ))}
         </nav>
-
-        <div className="student-card">
-          <div className="student-avatar">EA</div>
-          <div>
-            <strong>Estudiante</strong>
-            <span>Segundo año</span>
-          </div>
-          <span className="more" aria-hidden="true">•••</span>
-        </div>
+        <div className="student-card"><div className="student-avatar">EA</div><div><strong>Estudiante</strong><span>Segundo año</span></div><span className="more">•••</span></div>
       </aside>
 
       <div className="classroom-content">
@@ -70,123 +53,110 @@ export default function Home() {
           <div className="week-status"><span className="status-dot" /> Semana 1 activa</div>
         </header>
 
-        <section className="lesson-layout" id="leccion">
-          <article className="lesson-content">
-            <div className="lesson-meta">
-              <span>Semana 01</span>
-              <span>·</span>
-              <span>6 horas</span>
-              <span>·</span>
-              <span>Unidad 1</span>
-            </div>
-            <p className="eyebrow">Lección actual</p>
+        <div className="study-layout" id="apunte">
+          <article className="study-note">
+            <div className="lesson-meta"><span>Semana 01</span><span>·</span><span>6 horas</span><span>·</span><span>Lectura y taller</span></div>
+            <p className="eyebrow">Apunte de estudio</p>
             <h2>Diseñar en la era de la IA generativa</h2>
-            <p className="lesson-lead">
-              Una herramienta puede proponer código, modelos o arquitecturas en
-              segundos. Tu trabajo como diseñador es comprender el contexto,
-              evaluar las consecuencias y responder por las decisiones.
-            </p>
+            <p className="note-lead">Esta semana no empezamos eligiendo un framework ni escribiendo código. Empezamos por una pregunta más importante: <strong>¿qué problema estamos resolviendo y con qué criterio vamos a tomar decisiones?</strong></p>
 
-            <div className="callout">
-              <span className="callout-icon">✦</span>
-              <div>
-                <strong>Idea central de la semana</strong>
-                <p>La IA acelera borradores; el criterio profesional decide qué aceptar, qué cuestionar y cómo verificarlo.</p>
-              </div>
+            <div className="idea-card">
+              <span>✦</span><div><strong>Idea central</strong><p>La IA puede acelerar artefactos; la responsabilidad de formular, decidir y verificar una solución sigue siendo humana.</p></div>
             </div>
 
-            <section className="lesson-section" aria-labelledby="objetivos">
-              <div className="section-title">
-                <span>01</span>
-                <h3 id="objetivos">Al finalizar esta semana podrás</h3>
+            <section id="punto-de-partida" className="note-section">
+              <p className="section-number">01</p><h3>Antes de diseñar: una pregunta</h3>
+              <p>Diseñar software no es elegir la tecnología más reciente. Es transformar una necesidad en una solución que pueda comprenderse, evolucionar y verificarse. Para eso primero necesitamos conocer el problema, sus límites y las consecuencias de cada alternativa.</p>
+              <div className="definition-grid">
+                <div><strong>Problema</strong><p>Situación que afecta a personas u organizaciones y que se busca mejorar.</p></div>
+                <div><strong>Restricción</strong><p>Condición que limita una solución: tiempo, datos sensibles, reglas o recursos.</p></div>
+                <div><strong>Atributo de calidad</strong><p>Propiedad que indica cómo debe comportarse la solución, además de lo que hace.</p></div>
+                <div><strong>Decisión de diseño</strong><p>Elección justificada entre alternativas, con consecuencias conocidas.</p></div>
               </div>
-              <ul className="goal-list">
-                {learningGoals.map((goal) => <li key={goal}>{goal}</li>)}
-              </ul>
+              <p className="study-question"><strong>Para pensar:</strong> si dos soluciones cumplen la misma función, ¿cuál elegirías y con qué evidencia?</p>
             </section>
 
-            <section className="lesson-section" aria-labelledby="caso">
-              <div className="section-title">
-                <span>02</span>
-                <h3 id="caso">El caso que vamos a diseñar</h3>
+            <section id="ia-y-criterio" className="note-section">
+              <p className="section-number">02</p><h3>IA generativa y criterio profesional</h3>
+              <p>Un asistente puede sugerir nombres, generar casos de prueba o redactar un borrador de arquitectura. Eso no convierte su salida en una decisión correcta para nuestro contexto. Una propuesta puede ser técnicamente posible y, al mismo tiempo, desproporcionada, insegura o difícil de mantener.</p>
+              <div className="responsibility-table">
+                <div className="table-row table-head"><span>Tarea</span><span>La IA puede asistir</span><span>El equipo debe responder</span></div>
+                <div className="table-row"><span>Nombrar una interfaz</span><span>Proponer alternativas</span><span>Elegir un nombre coherente con el dominio</span></div>
+                <div className="table-row"><span>Generar pruebas</span><span>Crear borradores de casos</span><span>Verificar que cubren los criterios correctos</span></div>
+                <div className="table-row"><span>Elegir arquitectura</span><span>Comparar opciones</span><span>Justificar costos, riesgos y atributos priorizados</span></div>
+                <div className="table-row"><span>Gestionar datos</span><span>Señalar posibles controles</span><span>Definir quién puede ver qué información</span></div>
               </div>
+              <div className="warning-card"><strong>No delegues la justificación.</strong><p>Una respuesta generada no reemplaza el análisis de requisitos, contratos, riesgos ni pruebas. Si usás IA en un entregable, registrá qué pediste, qué aceptaste o descartaste y cómo lo verificaste.</p></div>
+            </section>
+
+            <section id="caso-sate" className="note-section">
+              <p className="section-number">03</p><h3>Conocer el caso: SATE</h3>
+              <p>Durante la cursada trabajaremos con el <strong>Sistema de Acompañamiento de Trayectorias Estudiantiles</strong>. Hoy las solicitudes de tutoría, la disponibilidad de tutores y los seguimientos se distribuyen entre mensajes, planillas y canales no integrados. Esto dificulta evitar superposiciones, conocer el estado de las intervenciones y obtener información agregada para la coordinación.</p>
               <div className="sate-card">
-                <div className="sate-title"><span>SATE</span><strong>Sistema de Acompañamiento de Trayectorias Estudiantiles</strong></div>
-                <p>
-                  Estudiantes solicitan tutorías, tutores registran su disponibilidad
-                  y seguimiento, y una coordinación asigna intervenciones y consulta
-                  indicadores agregados.
-                </p>
-                <div className="tag-list">
-                  <span>Solicitudes de tutoría</span>
-                  <span>Disponibilidad</span>
-                  <span>Asignaciones</span>
-                  <span>Seguimiento</span>
+                <div className="sate-title"><span>SATE</span><strong>Una primera solución evolutiva y mantenible para organizar tutorías.</strong></div>
+                <div className="actor-grid">
+                  <div><b>Estudiante</b><p>Solicita ayuda y consulta el estado de sus tutorías.</p></div>
+                  <div><b>Tutor/a</b><p>Declara disponibilidad y registra un seguimiento breve.</p></div>
+                  <div><b>Coordinador/a</b><p>Asigna tutorías, resuelve conflictos y consulta indicadores.</p></div>
+                  <div><b>Administrador/a</b><p>Mantiene roles, usuarios y parámetros básicos.</p></div>
                 </div>
               </div>
-            </section>
-
-            <section className="lesson-section" aria-labelledby="calidad">
-              <div className="section-title">
-                <span>03</span>
-                <h3 id="calidad">Antes de una solución, criterios de calidad</h3>
-              </div>
-              <p className="section-copy">Un atributo de calidad no es una etiqueta: es algo que debe poder observarse en una situación concreta.</p>
-              <div className="quality-grid">
-                {qualityAttributes.map(([title, copy]) => (
-                  <div className="quality-card" key={title}>
-                    <strong>{title}</strong>
-                    <p>{copy}</p>
-                  </div>
-                ))}
+              <div className="scope-grid">
+                <div><p className="scope-label included">Primera versión: sí</p><ul><li>Solicitudes y franjas de disponibilidad.</li><li>Asignación compatible de tutorías.</li><li>Estados e historial mínimo.</li><li>Indicadores agregados.</li></ul></div>
+                <div><p className="scope-label excluded">Por ahora: no</p><ul><li>Calendario, correo o mensajería reales.</li><li>Chat, videollamadas o documentos personales.</li><li>Analítica predictiva o recomendaciones por IA.</li></ul></div>
               </div>
             </section>
 
-            <section className="lesson-section" aria-labelledby="actividad">
-              <div className="section-title">
-                <span>04</span>
-                <h3 id="actividad">Actividad de la semana</h3>
+            <section id="calidad" className="note-section">
+              <p className="section-number">04</p><h3>Atributos de calidad: cómo debe ser la solución</h3>
+              <p>Decir “queremos seguridad” o “el sistema debe ser mantenible” no alcanza. Un atributo útil se formula como un escenario: <em>cuando ocurra un estímulo, el sistema debe responder de una manera que podamos comprobar.</em></p>
+              <div className="quality-list">
+                {qualities.map(([name, scenario, implication]) => <div className="quality-row" key={name}><div><strong>{name}</strong><span>Escenario</span><p>{scenario}</p></div><div><span>Implicancia</span><p>{implication}</p></div></div>)}
               </div>
-              <div className="activity-card">
-                <div>
-                  <p className="activity-type">Trabajo en equipo · Entrega breve</p>
-                  <h4>Carta de diseño inicial</h4>
-                  <p>Elaboren una primera lectura del problema y prioricen tres atributos de calidad con una justificación breve.</p>
-                </div>
-                <ol>
-                  <li>Problema en lenguaje no técnico.</li>
-                  <li>Tres atributos con situaciones verificables.</li>
-                  <li>Una tensión y una decisión pendiente.</li>
-                  <li>Una regla para usar IA en el equipo.</li>
-                </ol>
-              </div>
+              <p className="study-question"><strong>Regla práctica:</strong> para cada atributo, anotá qué evidencia demostraría que se cumple y qué costo o tensión acepta el equipo.</p>
             </section>
 
-            <div className="lesson-footer">
-              <p>Cuando termines de leer, conversá con tu equipo y empezá la carta de diseño.</p>
-              <a href="#actividad">Ir a la actividad <span>→</span></a>
-            </div>
+            <section id="borradores" className="note-section">
+              <p className="section-number">05</p><h3>Leer propuestas críticamente</h3>
+              <p>En diseño, el problema rara vez es una alternativa “obviamente mala”. Frecuentemente tenemos ideas plausibles que omiten contexto, costos o riesgos. Observá estos dos borradores para SATE.</p>
+              <div className="draft-grid">
+                <div className="draft-card"><p>Borrador A · “Escalable desde el primer día”</p><h4>Microservicios para todo</h4><blockquote>Cinco servicios independientes, bases de datos separadas, eventos, gateway, colas y contenedores desde la primera versión.</blockquote><strong>Preguntá:</strong><span>¿Qué necesidad actual compensa ese costo operativo?</span></div>
+                <div className="draft-card"><p>Borrador B · “Rápido de construir”</p><h4>Todo en controladores</h4><blockquote>Una única pantalla y controladores que acceden directamente a datos; el coordinador ve toda la información.</blockquote><strong>Preguntá:</strong><span>¿Qué límites de privacidad, evolución y pruebas quedan sin resolver?</span></div>
+              </div>
+              <ul className="analysis-list"><li>¿Qué necesidad concreta atiende cada propuesta?</li><li>¿Qué atributo protege y cuál pone en riesgo?</li><li>¿Qué supuesto no fue declarado?</li><li>¿Qué debería probarse o investigarse antes de implementar?</li></ul>
+            </section>
+
+            <section id="carta" className="note-section">
+              <p className="section-number">06</p><h3>Tu carta de diseño inicial</h3>
+              <p>La carta de diseño es el primer artefacto del equipo. No es un diseño terminado: es una evidencia de que empezaron por comprender el problema antes de proponer una solución.</p>
+              <ol className="deliverable-list">
+                <li><span>01</span><div><strong>Problema</strong><p>Describan la situación, quién se ve afectado y qué mejora se espera. No mencionen tecnologías todavía.</p></div></li>
+                <li><span>02</span><div><strong>Actores y necesidades</strong><p>Identifiquen quién usa el sistema, qué necesita y qué restricciones son relevantes.</p></div></li>
+                <li><span>03</span><div><strong>Alcance inicial</strong><p>Separen con claridad qué se incluirá y qué queda fuera de la primera versión.</p></div></li>
+                <li><span>04</span><div><strong>Tres atributos priorizados</strong><p>Para cada uno escriban un escenario verificable, una evidencia y una tensión aceptada.</p></div></li>
+                <li><span>05</span><div><strong>Preguntas abiertas y regla de IA</strong><p>Declaren una decisión pendiente, la información necesaria y cómo usarán IA de forma responsable.</p></div></li>
+              </ol>
+              <div className="example-card"><p>Ejemplo de escenario</p><strong>“Cuando coordinación asigne una tutoría, el sistema debe impedir una franja que se superponga con otra tutoría confirmada del mismo tutor.”</strong><span>La evidencia puede ser una prueba automatizada de la regla de compatibilidad.</span></div>
+            </section>
+
+            <section id="recorrido" className="note-section">
+              <p className="section-number">07</p><h3>Recorrido de la semana y entrega</h3>
+              <div className="route-grid">
+                <div><span>Encuentro 1 · 3 horas</span><h4>¿Qué decide un diseñador?</h4><p>Clasificá tareas, compará los dos borradores y registrá preguntas que ninguna IA podría responder sin más contexto.</p></div>
+                <div><span>Encuentro 2 · 3 horas</span><h4>Carta de diseño inicial</h4><p>Priorizá atributos, completá la ficha en equipo, intercambiá devoluciones y ajustá la carta antes de entregarla.</p></div>
+              </div>
+              <div className="checklist-card"><h4>Antes de entregar, verificá</h4><label><input type="checkbox" /> Puedo explicar el problema sin hablar de una tecnología.</label><label><input type="checkbox" /> Cada atributo tiene un escenario y una evidencia.</label><label><input type="checkbox" /> Declaré al menos una incertidumbre en lugar de inventar un requisito.</label><label><input type="checkbox" /> Puedo justificar cualquier aporte que haya obtenido con IA.</label></div>
+            </section>
+
+            <footer className="note-footer"><div><strong>Fin del apunte · Semana 1</strong><p>La próxima semana pasaremos del problema a los actores, escenarios y criterios de aceptación.</p></div><a href="#apunte">Volver al inicio ↑</a></footer>
           </article>
 
-          <aside className="lesson-panel" aria-label="Información de la lección">
-            <div className="panel-card current-card">
-              <p>Estás aquí</p>
-              <h3>Semana 1</h3>
-              <div className="mini-progress"><span /></div>
-              <small>Lección 1 de 2</small>
-            </div>
-            <div className="panel-card schedule-card">
-              <p className="panel-label">Esta semana</p>
-              <div className="schedule-item"><span>01</span><div><strong>¿Qué decide un diseñador?</strong><small>Encuentro 1 · 3 horas</small></div></div>
-              <div className="schedule-item"><span>02</span><div><strong>Carta de diseño inicial</strong><small>Encuentro 2 · 3 horas</small></div></div>
-            </div>
-            <div className="panel-card reminder-card">
-              <span>↗</span>
-              <p><strong>Recordá:</strong> una propuesta de IA puede ser útil sin ser automáticamente correcta.</p>
-            </div>
+          <aside className="study-index" aria-label="Índice del apunte">
+            <div className="index-card"><p>En este apunte</p>{tableOfContents.map(([id, label]) => <a href={`#${id}`} key={id}>{label}</a>)}</div>
+            <div className="index-card note-status"><span>◔</span><div><strong>Lectura estimada</strong><p>20–25 min</p></div></div>
+            <div className="index-card help-card"><strong>Cómo usar este apunte</strong><p>Leé, tomá notas y volvé a las preguntas durante el taller con tu equipo.</p></div>
           </aside>
-        </section>
-
+        </div>
         <div id="proximamente" className="next-module">Próximo módulo: Contexto, actores y atributos de calidad</div>
       </div>
     </main>
