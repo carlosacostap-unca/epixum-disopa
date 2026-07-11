@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Semana 1 | Diseño de Software y Patrones",
-  description: "Diseñar en la era de la IA generativa.",
+  title: "DISOPA | Diseño de Software y Patrones",
+  description: "Aula virtual de Diseño de Software y Patrones.",
 };
 
 export default function RootLayout({

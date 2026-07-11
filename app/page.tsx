@@ -1,214 +1,194 @@
-const sessions = [
-  {
-    number: "01",
-    title: "¿Qué decide un diseñador?",
-    time: "Encuentro 1 · 3 horas",
-    description:
-      "Abrimos la cursada distinguiendo lo que una IA puede proponer de lo que un equipo debe comprender, decidir y verificar.",
-    activities: [
-      "Presentación de la materia, el caso SATE y sus hitos.",
-      "Clasificación razonada: asistencia de IA, decisión humana o responsabilidad compartida.",
-      "Lectura crítica de dos propuestas de solución para el mismo problema.",
-    ],
-  },
-  {
-    number: "02",
-    title: "Carta de diseño inicial",
-    time: "Encuentro 2 · 3 horas",
-    description:
-      "Convertimos una primera comprensión del problema en criterios de calidad, preguntas abiertas y decisiones que puedan explicarse.",
-    activities: [
-      "Introducción a mantenibilidad, extensibilidad, testabilidad, seguridad, rendimiento y simplicidad.",
-      "Taller en equipos para completar una ficha de problema.",
-      "Revisión entre pares y ajuste de la carta de diseño inicial.",
-    ],
-  },
+const modules = [
+  { number: "01", title: "Diseñar en la era de la IA", state: "En curso", active: true },
+  { number: "02", title: "Contexto y atributos de calidad", state: "Próximamente" },
+  { number: "03", title: "Comparar arquitecturas", state: "Próximamente" },
+  { number: "04", title: "Decidir y documentar con ADR", state: "Próximamente" },
+];
+
+const learningGoals = [
+  "Distinguir una propuesta generada de una decisión de diseño justificada.",
+  "Reconocer atributos de calidad y sus tensiones iniciales.",
+  "Elaborar una carta de diseño para el caso SATE.",
 ];
 
 const qualityAttributes = [
-  ["Mantenibilidad", "Que un cambio futuro pueda entenderse y realizarse sin romper lo existente."],
-  ["Testabilidad", "Que las reglas relevantes puedan verificarse con ejemplos y pruebas."],
-  ["Privacidad", "Que cada rol acceda sólo a la información necesaria para acompañar trayectorias."],
-  ["Simplicidad", "Que la primera versión sea proporcional al problema y al equipo que la construye."],
+  ["Mantenibilidad", "Cambiar una regla sin romper las demás."],
+  ["Testabilidad", "Comprobar el comportamiento con ejemplos y pruebas."],
+  ["Privacidad", "Mostrar a cada rol sólo la información necesaria."],
+  ["Simplicidad", "Construir una primera versión proporcional al problema."],
 ];
 
 export default function Home() {
   return (
-    <main>
-      <section className="hero" aria-labelledby="page-title">
-        <div className="hero-grid" />
-        <div className="hero-content container">
-          <p className="eyebrow">Diseño de Software y Patrones · Semana 1</p>
-          <p className="course-label">Unidad 1 · Diseño de soluciones y decisiones arquitectónicas</p>
-          <h1 id="page-title">Diseñar antes de pedir código.</h1>
-          <p className="hero-copy">
-            La inteligencia artificial puede acelerar borradores. El diseño sigue
-            siendo la tarea de comprender el contexto, explicitar compromisos y
-            verificar las decisiones.
-          </p>
-          <a className="hero-link" href="#recorrido">
-            Ver el recorrido de la semana <span aria-hidden="true">↓</span>
-          </a>
+    <main className="classroom-shell">
+      <aside className="course-sidebar" aria-label="Navegación del curso">
+        <div className="brand">
+          <span className="brand-mark">DS</span>
+          <span>DISOPA</span>
         </div>
-        <aside className="week-card" aria-label="Datos de la semana">
-          <span>Semana</span>
-          <strong>01</strong>
-          <div />
-          <p>6 horas</p>
-          <p>Dos encuentros</p>
-          <p>Taller colaborativo</p>
-        </aside>
-      </section>
 
-      <section className="container intro-section">
-        <div className="section-kicker">La pregunta de partida</div>
-        <div className="intro-layout">
-          <h2>¿Qué puede producir una herramienta y qué debe decidir un profesional?</h2>
-          <div>
-            <p>
-              No buscamos respuestas automáticas ni una arquitectura “de moda”.
-              Buscamos formular buenas preguntas antes de construir: quiénes usan
-              el sistema, qué necesitan, qué información es sensible y qué debe
-              seguir funcionando cuando cambie el contexto.
-            </p>
-            <p>
-              Esta semana inicia el trabajo con <strong>SATE</strong>, el Sistema
-              de Acompañamiento de Trayectorias Estudiantiles. Durante la cursada
-              será nuestro caso integrador para practicar decisiones de diseño con
-              evidencia.
-            </p>
+        <div className="course-summary">
+          <p className="sidebar-label">Tu curso</p>
+          <h1>Diseño de Software y Patrones</h1>
+          <div className="progress-track" aria-label="Progreso del curso: 7 por ciento">
+            <span />
           </div>
+          <p className="progress-copy">7% completado · Semana 1 de 15</p>
         </div>
-      </section>
 
-      <section id="recorrido" className="sessions-section">
-        <div className="container">
-          <div className="section-heading">
-            <div>
-              <p className="section-kicker">Recorrido de aprendizaje</p>
-              <h2>Dos encuentros para empezar a diseñar</h2>
+        <nav className="module-nav" aria-label="Módulos del curso">
+          <p className="sidebar-label">Contenido</p>
+          {modules.map((module) => (
+            <a
+              className={`module-item${module.active ? " active" : ""}`}
+              href={module.active ? "#leccion" : "#proximamente"}
+              key={module.number}
+            >
+              <span className="module-number">{module.number}</span>
+              <span className="module-text">
+                <strong>{module.title}</strong>
+                <small>{module.state}</small>
+              </span>
+              {module.active && <span className="active-dot" aria-label="Módulo actual" />}
+            </a>
+          ))}
+        </nav>
+
+        <div className="student-card">
+          <div className="student-avatar">EA</div>
+          <div>
+            <strong>Estudiante</strong>
+            <span>Segundo año</span>
+          </div>
+          <span className="more" aria-hidden="true">•••</span>
+        </div>
+      </aside>
+
+      <div className="classroom-content">
+        <header className="topbar">
+          <div className="breadcrumb"><span>Mis cursos</span><b>/</b> Diseño de Software y Patrones</div>
+          <div className="week-status"><span className="status-dot" /> Semana 1 activa</div>
+        </header>
+
+        <section className="lesson-layout" id="leccion">
+          <article className="lesson-content">
+            <div className="lesson-meta">
+              <span>Semana 01</span>
+              <span>·</span>
+              <span>6 horas</span>
+              <span>·</span>
+              <span>Unidad 1</span>
             </div>
-            <p>6 horas de trabajo: discutir, analizar, producir y revisar.</p>
-          </div>
+            <p className="eyebrow">Lección actual</p>
+            <h2>Diseñar en la era de la IA generativa</h2>
+            <p className="lesson-lead">
+              Una herramienta puede proponer código, modelos o arquitecturas en
+              segundos. Tu trabajo como diseñador es comprender el contexto,
+              evaluar las consecuencias y responder por las decisiones.
+            </p>
 
-          <div className="sessions-grid">
-            {sessions.map((session) => (
-              <article className="session-card" key={session.number}>
-                <span className="session-number">{session.number}</span>
-                <p className="session-time">{session.time}</p>
-                <h3>{session.title}</h3>
-                <p>{session.description}</p>
-                <ul>
-                  {session.activities.map((activity) => (
-                    <li key={activity}>{activity}</li>
-                  ))}
-                </ul>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="container case-section" aria-labelledby="case-title">
-        <div className="case-header">
-          <p className="section-kicker">Caso integrador</p>
-          <h2 id="case-title">SATE: acompañar trayectorias, no sólo administrar datos</h2>
-        </div>
-        <div className="case-content">
-          <p>
-            El sistema permitirá que estudiantes soliciten tutorías, que tutores
-            registren disponibilidad y seguimiento, y que la coordinación asigne
-            intervenciones y consulte indicadores agregados.
-          </p>
-          <div className="case-tags" aria-label="Alcance inicial del caso">
-            <span>Solicitudes de tutoría</span>
-            <span>Disponibilidad de tutores</span>
-            <span>Asignaciones compatibles</span>
-            <span>Seguimiento e indicadores</span>
-          </div>
-        </div>
-      </section>
-
-      <section className="quality-section">
-        <div className="container">
-          <div className="section-heading quality-heading">
-            <div>
-              <p className="section-kicker">Criterios de calidad</p>
-              <h2>Una buena solución protege lo que importa</h2>
+            <div className="callout">
+              <span className="callout-icon">✦</span>
+              <div>
+                <strong>Idea central de la semana</strong>
+                <p>La IA acelera borradores; el criterio profesional decide qué aceptar, qué cuestionar y cómo verificarlo.</p>
+              </div>
             </div>
-            <p>
-              Un atributo de calidad no es una palabra decorativa: debe poder
-              observarse en una situación concreta.
-            </p>
-          </div>
-          <div className="quality-grid">
-            {qualityAttributes.map(([title, description], index) => (
-              <article className="quality-card" key={title}>
-                <span>0{index + 1}</span>
-                <h3>{title}</h3>
-                <p>{description}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      <section className="container contrast-section">
-        <div className="section-heading">
-          <div>
-            <p className="section-kicker">Lectura crítica</p>
-            <h2>Dos respuestas rápidas. Ninguna es una decisión suficiente.</h2>
-          </div>
-        </div>
-        <div className="contrast-grid">
-          <article className="proposal proposal-a">
-            <p className="proposal-label">Borrador A</p>
-            <h3>“Escalable desde el primer día”</h3>
-            <p>
-              Propone microservicios, bases de datos separadas, eventos, gateway,
-              colas y contenedores para una primera versión.
-            </p>
-            <strong>Pregunta clave</strong>
-            <p>¿Qué necesidad concreta justifica hoy ese costo operativo?</p>
+            <section className="lesson-section" aria-labelledby="objetivos">
+              <div className="section-title">
+                <span>01</span>
+                <h3 id="objetivos">Al finalizar esta semana podrás</h3>
+              </div>
+              <ul className="goal-list">
+                {learningGoals.map((goal) => <li key={goal}>{goal}</li>)}
+              </ul>
+            </section>
+
+            <section className="lesson-section" aria-labelledby="caso">
+              <div className="section-title">
+                <span>02</span>
+                <h3 id="caso">El caso que vamos a diseñar</h3>
+              </div>
+              <div className="sate-card">
+                <div className="sate-title"><span>SATE</span><strong>Sistema de Acompañamiento de Trayectorias Estudiantiles</strong></div>
+                <p>
+                  Estudiantes solicitan tutorías, tutores registran su disponibilidad
+                  y seguimiento, y una coordinación asigna intervenciones y consulta
+                  indicadores agregados.
+                </p>
+                <div className="tag-list">
+                  <span>Solicitudes de tutoría</span>
+                  <span>Disponibilidad</span>
+                  <span>Asignaciones</span>
+                  <span>Seguimiento</span>
+                </div>
+              </div>
+            </section>
+
+            <section className="lesson-section" aria-labelledby="calidad">
+              <div className="section-title">
+                <span>03</span>
+                <h3 id="calidad">Antes de una solución, criterios de calidad</h3>
+              </div>
+              <p className="section-copy">Un atributo de calidad no es una etiqueta: es algo que debe poder observarse en una situación concreta.</p>
+              <div className="quality-grid">
+                {qualityAttributes.map(([title, copy]) => (
+                  <div className="quality-card" key={title}>
+                    <strong>{title}</strong>
+                    <p>{copy}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            <section className="lesson-section" aria-labelledby="actividad">
+              <div className="section-title">
+                <span>04</span>
+                <h3 id="actividad">Actividad de la semana</h3>
+              </div>
+              <div className="activity-card">
+                <div>
+                  <p className="activity-type">Trabajo en equipo · Entrega breve</p>
+                  <h4>Carta de diseño inicial</h4>
+                  <p>Elaboren una primera lectura del problema y prioricen tres atributos de calidad con una justificación breve.</p>
+                </div>
+                <ol>
+                  <li>Problema en lenguaje no técnico.</li>
+                  <li>Tres atributos con situaciones verificables.</li>
+                  <li>Una tensión y una decisión pendiente.</li>
+                  <li>Una regla para usar IA en el equipo.</li>
+                </ol>
+              </div>
+            </section>
+
+            <div className="lesson-footer">
+              <p>Cuando termines de leer, conversá con tu equipo y empezá la carta de diseño.</p>
+              <a href="#actividad">Ir a la actividad <span>→</span></a>
+            </div>
           </article>
-          <article className="proposal proposal-b">
-            <p className="proposal-label">Borrador B</p>
-            <h3>“Rápido de construir”</h3>
-            <p>
-              Propone una única pantalla, controladores conectados directamente a
-              datos y acceso amplio para facilitar las asignaciones.
-            </p>
-            <strong>Pregunta clave</strong>
-            <p>¿Qué límites de privacidad, evolución y prueba deja sin resolver?</p>
-          </article>
-        </div>
-      </section>
 
-      <section className="deliverable-section">
-        <div className="container deliverable-layout">
-          <div>
-            <p className="section-kicker">Evidencia de la semana</p>
-            <h2>Tu primera carta de diseño</h2>
-            <p>
-              En equipo, transformen su lectura inicial del problema en una
-              evidencia breve, clara y discutible. No se evalúa la cantidad de
-              código: se evalúa la calidad del razonamiento.
-            </p>
-          </div>
-          <ol className="deliverable-list">
-            <li><span>01</span> Una síntesis del problema en lenguaje no técnico.</li>
-            <li><span>02</span> Tres atributos de calidad con situaciones verificables.</li>
-            <li><span>03</span> Una tensión o compromiso detectado.</li>
-            <li><span>04</span> Una decisión pendiente y la información necesaria.</li>
-            <li><span>05</span> Una regla para el uso responsable de IA en el equipo.</li>
-          </ol>
-        </div>
-      </section>
+          <aside className="lesson-panel" aria-label="Información de la lección">
+            <div className="panel-card current-card">
+              <p>Estás aquí</p>
+              <h3>Semana 1</h3>
+              <div className="mini-progress"><span /></div>
+              <small>Lección 1 de 2</small>
+            </div>
+            <div className="panel-card schedule-card">
+              <p className="panel-label">Esta semana</p>
+              <div className="schedule-item"><span>01</span><div><strong>¿Qué decide un diseñador?</strong><small>Encuentro 1 · 3 horas</small></div></div>
+              <div className="schedule-item"><span>02</span><div><strong>Carta de diseño inicial</strong><small>Encuentro 2 · 3 horas</small></div></div>
+            </div>
+            <div className="panel-card reminder-card">
+              <span>↗</span>
+              <p><strong>Recordá:</strong> una propuesta de IA puede ser útil sin ser automáticamente correcta.</p>
+            </div>
+          </aside>
+        </section>
 
-      <footer className="container site-footer">
-        <p>Diseño de Software y Patrones</p>
-        <p>Semana 1 · Diseñar en la era de la IA generativa</p>
-      </footer>
+        <div id="proximamente" className="next-module">Próximo módulo: Contexto, actores y atributos de calidad</div>
+      </div>
     </main>
   );
 }
