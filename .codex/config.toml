@@ -1,0 +1,12 @@
+[mcp_servers.pocketbase-epixum-disopa]
+command = "node"
+args = ["tools/pocketbase-mcp/server.mjs"]
+
+[mcp_servers.pocketbase-epixum-disopa.tools.create_record]
+approval_mode = "approve"
+
+[mcp_servers.pocketbase-epixum-disopa.tools.update_record]
+approval_mode = "approve"
+
+[mcp_servers.pocketbase-epixum-disopa.tools.delete_record]
+approval_mode = "approve"

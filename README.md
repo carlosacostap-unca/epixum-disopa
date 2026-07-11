@@ -16,6 +16,18 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+## PocketBase MCP
+
+The local MCP server reads `NEXT_PUBLIC_POCKETBASE_URL`, `POCKETBASE_ADMIN_EMAIL`, and
+`POCKETBASE_ADMIN_PASSWORD` from `.env.local`. It exposes health, schema, record-read, and
+record-write tools through standard input/output; credentials are never returned by its tools.
+
+Run it manually with:
+
+```bash
+npm run mcp:pocketbase
+```
+
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
